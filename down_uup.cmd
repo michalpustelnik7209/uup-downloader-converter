@@ -34,13 +34,19 @@ aria2c -i aria2_script.txt -d %uupfold%
 if %del-aria2%==1 ( del aria2_script.txt&goto checkconv ) else ( goto checkconv )
 
 :checkconv
-if %run_convert% neq 0 start /wait convert-UUP.cmd&goto quit
+if %run_convert% neq 0 start /wait convert-UUP.cmd&goto quit_conv
 if %run_convert% equ 0 goto quit
 
-:quit
+:quit_conv
 echo Deleting UUP folder...
-rd UUPs\ /s /q
+rd %uupfold% /s /q
 echo.
+echo Process is completed.
+echo Press any key to exit.
+pause>nul
+exit
+
+:quit
 echo Process is completed.
 echo Press any key to exit.
 pause>nul
