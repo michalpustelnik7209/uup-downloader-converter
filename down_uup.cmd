@@ -4,7 +4,7 @@ set del-aria2=1
 :menu
 cls
 if %run_convert% neq 0 ( echo 1. Run convertion process: Enabled ) else if %run_convert% equ 0 ( echo 1. Run convertion process: Disabled )
-if %del-aria2% neq 0 ( echo 2. Delete script: Enabled ) else if %run_convert% equ 0 ( echo 2. Delete script: Disabled )
+if %del-aria2% neq 0 ( echo 2. Delete generated script: Enabled ) else if %run_convert% equ 0 ( echo 2. Delete generated script: Disabled )
 set /p "enbl=Select option to enable or disable and press Enter. Type download to begin: "
 if %enbl%==1 goto check1
 if %enbl%==2 goto check2
