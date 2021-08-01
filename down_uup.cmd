@@ -28,7 +28,10 @@ echo If you are finding update ID then find it on uupdump.net by typing build on
 set /p "id=Update ID/UUP ID: "
 set /p "lng=Language code: "
 set /p "edt=Edition: "
+goto getfiles
+:getfiles
 aria2c -o"aria2_script.txt" "https://uup.rg-adguard.net/api/GetFiles?id=%id%&lang=%lng%&edition=%edt%&txt=yes"
+for %%i in ("aria2_script.txt") do (if /i %%~zi LEQ 10 goto LinkGenErr)
 if not exist %uupfold% ( mkdir %uupfold%&goto work2 ) else ( goto work2 )
 
 :work2
@@ -53,3 +56,10 @@ echo Process is completed.
 echo Press any key to exit.
 pause>nul
 exit
+
+:LinkErrGen
+del aria2_script.txt
+echo Generating links has failed.
+echo Try again later.
+choice /c 01 /m "Press 0 to exit, 1 to try again"
+if %errorlevel%==0 ( exit ) else if %errorlevel%==1 ( goto getfiles )
