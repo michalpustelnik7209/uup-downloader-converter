@@ -20,7 +20,7 @@ if %del-aria2%==1 set del-aria2=0&goto menu
 
 :work
 cd /d "%~dp0"
-echo Please set UUP output folder, for automatic detection type UUPs
+echo Please set UUP output folder, for automatic detection in converter type UUPs
 set /p "uupfold=Type folder here: "
 echo Warning! If you are using this script, then you need to know that is only downloading script.
 echo Run down-conv-uup.cmd to add converting process
@@ -29,7 +29,9 @@ set /p "id=Update ID/UUP ID: "
 set /p "lng=Language code: "
 set /p "edt=Edition: "
 aria2c -o"aria2_script.txt" "https://uup.rg-adguard.net/api/GetFiles?id=%id%&lang=%lng%&edition=%edt%&txt=yes"
-mkdir %uupfold%
+if not exist %uupfold% ( mkdir %uupfold%&goto work2 ) else ( goto work2 )
+
+:work2
 aria2c -i aria2_script.txt -d %uupfold%
 if %del-aria2%==1 ( del aria2_script.txt&goto checkconv ) else ( goto checkconv )
 
