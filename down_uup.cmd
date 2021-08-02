@@ -31,9 +31,10 @@ set /p "edt=Edition: "
 goto getfiles
 :getfiles
 aria2c -o"aria2_script.txt" "https://uup.rg-adguard.net/api/GetFiles?id=%id%&lang=%lng%&edition=%edt%&txt=yes"
-for %%i in ("aria2_script.txt") do (if /i %%~zi LEQ 10 goto LinkGenErr)
 if not exist %uupfold% ( mkdir %uupfold%&goto work2 ) else ( goto work2 )
-
+find /i "error" aria2_script.txt >nul
+if %errorlevel% equ 0 goto LinkErrGen
+if %errorlevel% equ 1 goto work2
 :work2
 aria2c -i aria2_script.txt -d %uupfold%
 if %del-aria2%==1 ( del aria2_script.txt&goto checkconv ) else ( goto checkconv )
