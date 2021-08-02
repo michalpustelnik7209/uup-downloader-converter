@@ -30,7 +30,10 @@ set /p "lng=Language code: "
 set /p "edt=Edition: "
 goto getfiles
 :getfiles
-aria2c -o"aria2_script.txt" "https://uup.rg-adguard.net/api/GetFiles?id=%id%&lang=%lng%&edition=%edt%&txt=yes"
+echo 1. UUPDump
+echo 2. UUP generation project
+choice /c 12 /m "Select server"
+if %errorlevel% equ 2 (aria2c -o"aria2_script.txt" "https://uup.rg-adguard.net/api/GetFiles?id=%id%&lang=%lng%&edition=%edt%&txt=yes") else if %errorlevel% equ 1 (aria2c -o"aria2_script.txt" "https://uupdump.net/get.php?id=%id%&pack=%lng%&edition=%edt%&aria2=2")
 if not exist %uupfold% ( mkdir %uupfold%&goto work2 ) else ( goto work2 )
 find /i "error" aria2_script.txt >nul
 if %errorlevel% equ 0 goto LinkErrGen
