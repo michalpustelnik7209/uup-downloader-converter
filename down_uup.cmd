@@ -3,7 +3,7 @@ if %1==auto ( goto auto ) else ( goto next )
 :next 
 if %1==noauto ( goto bgn ) else ( goto next2 )
 :next2
-if %1==help ( goto help ) else ( goto bgn )
+if %1==help ( goto help ) else ( set %1=noauto&goto next )
 goto menu
 :auto
 set uupfold=%2
@@ -89,7 +89,7 @@ del aria2_script.txt
 echo Generating links has failed.
 echo Try again later.
 choice /c 01 /m "Press 0 to exit, 1 to try again"
-if %errorlevel%==0 ( exit ) else if %errorlevel%==1 ( goto getfiles )
+if %errorlevel%==1 ( exit ) else if %errorlevel%==2 ( goto getfiles )
 
 :help
 echo To use these options first add argument auto or if you don't want to use them type noauto
