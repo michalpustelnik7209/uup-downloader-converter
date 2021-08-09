@@ -3,7 +3,7 @@ if %1==auto ( goto auto ) else ( goto next )
 :next 
 if %1==noauto ( goto bgn ) else ( goto next2 )
 :next2
-if %1==help ( goto help ) else ( set %1=noauto&goto next )
+if %1==help ( goto helpcmd ) else ( set %1=noauto&goto next )
 goto menu
 :auto
 set uupfold=%2
@@ -102,3 +102,23 @@ echo Sixth is server of generating
 echo Seventh if convertion process to run (yes or no)
 pause
 goto menu
+
+:helpcmd
+echo Example: down_uup.cmd auto UUPs yes 0bd1dd5f-c97f-4463-bdb6-8410d50c05d8 core en-us uupgen yes
+echo auto: Automatic script at first place (auto: on, noauto:off, help:this window)
+echo (download folder), e.g. UUPs
+echo (Download script deletion) yes or no
+echo ID of UUP
+echo Edition/SKU (e.g. core)
+echo Language: e.g. en-us
+echo Server of generating: (allowed values: uupdump, uupgen)
+echo Convertion process (yes for enabled, no for disabled)
+echo Explaining
+echo To use these options first add argument auto or if you don't want to use them type noauto
+echo First is download folder
+echo Second is Download script deletion (yes or no)
+echo Third is ID of download
+echo Fourth is edition
+echo Fifth is language
+echo Sixth is server of generating
+echo Seventh if convertion process to run (yes or no)
