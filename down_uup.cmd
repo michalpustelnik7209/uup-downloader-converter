@@ -53,7 +53,7 @@ echo 1. UUPDump
 echo 2. UUP generation project
 echo 3. UUPDump (HTML file, links temporary)
 echo 4. UUP generation project (HTML file, links temporary)
-choice /c 12 /m "Select server"
+choice /c 1234 /m "Select server"
 goto start_auto
 :start_auto
 if %errorlevel% equ 2 (aria2c -o"aria2_script.txt" "https://uup.rg-adguard.net/api/GetFiles?id=%id%&lang=%lng%&edition=%edt%&txt=yes"&goto workbgn1) else ( goto try1 )
