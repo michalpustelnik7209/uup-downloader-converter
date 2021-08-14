@@ -51,10 +51,17 @@ goto getfiles
 :getfiles
 echo 1. UUPDump
 echo 2. UUP generation project
+echo 3. UUPDump (HTML file, links temporary)
+echo 4. UUP generation project (HTML file, links temporary)
 choice /c 12 /m "Select server"
 goto start_auto
 :start_auto
-if %errorlevel% equ 2 (aria2c -o"aria2_script.txt" "https://uup.rg-adguard.net/api/GetFiles?id=%id%&lang=%lng%&edition=%edt%&txt=yes") else if %errorlevel% equ 1 (aria2c -o"aria2_script.txt" "https://uupdump.net/get.php?id=%id%&pack=%lng%&edition=%edt%&aria2=2")
+if %errorlevel% equ 2 (aria2c -o"aria2_script.txt" "https://uup.rg-adguard.net/api/GetFiles?id=%id%&lang=%lng%&edition=%edt%&txt=yes"&goto workbgn1) else ( goto try1 )
+:try1
+if %errorlevel% equ 1 (aria2c -o"aria2_script.txt" "https://uupdump.net/get.php?id=%id%&pack=%lng%&edition=%edt%&aria2=2"&goto workbgn1) else ( goto try2 )
+:try2
+if %errorlevel% equ 3 (aria2c -o"uup_list.html" "https://uupdump.net/get.php?id=%id%&pack=%lng%&edition=%edt%"&goto quit) else if %errorlevel% equ 4 (aria2c -o"uup_list.html" "https://uup.rg-adguard.net/api/GetFiles?id=%id%&lang=%lng%&edition=%edt%"&goto quit)
+:workbgn1
 if not exist %uupfold% ( mkdir %uupfold%&goto chck ) else ( goto chck )
 goto chck
 :chck
