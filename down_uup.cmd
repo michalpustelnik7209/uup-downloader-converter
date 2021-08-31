@@ -56,6 +56,7 @@ echo 4. UUP generation project (HTML file, links temporary)
 choice /c 1234 /m "Select server"
 goto start_auto
 :start_auto
+if not exists aria2c.exe goto error_no_aria2
 if %errorlevel% equ 2 (aria2c -o"aria2_script.txt" "https://uup.rg-adguard.net/api/GetFiles?id=%id%&lang=%lng%&edition=%edt%&txt=yes"&goto workbgn1) else ( goto try1 )
 :try1
 if %errorlevel% equ 1 (aria2c -o"aria2_script.txt" "https://uupdump.net/get.php?id=%id%&pack=%lng%&edition=%edt%&aria2=2"&goto workbgn1) else ( goto try2 )
@@ -110,6 +111,14 @@ echo Seventh if convertion process to run (yes or no)
 pause
 goto menu
 
+:error_no_aria2
+color 40
+echo Cannot find aria2c.exe file that is needed to download files.
+Download it to this folder from: https://github.com/michelle1574/uup-downloader-converter/raw/main/aria2c.exe
+echo.
+choice /c YN /m "Do you want to download it?"
+if errorlevel equ 1 iexplore https://github.com/michelle1574/uup-downloader-converter/raw/main/aria2c.exe
+if errorlevel equ 0 exit
 :helpcmd
 echo Example: down_uup.cmd auto UUPs yes 0bd1dd5f-c97f-4463-bdb6-8410d50c05d8 core en-us uupgen yes
 echo auto: Automatic script at first place (auto: on, noauto:off, help:this window)
