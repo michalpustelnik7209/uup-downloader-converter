@@ -1357,7 +1357,8 @@ echo.
 echo %line%
 if %dvd% equ 1 (
 for /f "tokens=3 delims=: " %%# in ('wimlib-imagex.exe info "ISOFOLDER\sources\install.wim" ^| findstr /c:"Image Count"') do set imgcount=%%#
-echo Updating install.wim / !imgcount! image^(s^) . . .
+if imgcount geq 2 echo Updating install.wim / !imgcount! images . . .
+if imgcount lss 2 echo Updating install.wim / !imgcount! image . . .
 )
 if %wim% equ 1 (
 for /f "tokens=3 delims=: " %%# in ('wimlib-imagex.exe info "%_tgt%" ^| findstr /c:"Image Count"') do set imgcount=%%#
