@@ -13,7 +13,7 @@ Say in Polish or English the suggestion for the program.
 **Add feature**
 Say feature name
 
-**How may work?**
+**How the program may work?**
 Say to me how the feature works.
 
 **Screenshots**
