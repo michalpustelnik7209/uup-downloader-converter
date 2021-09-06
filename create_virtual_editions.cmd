@@ -474,18 +474,36 @@ if %DeleteSource% equ 1 (
   if %_all% equ 1 (
     if %images% equ 1 (
     ren ISOFOLDER\sources\%WimFile% temp.wim
+if %_build% lss 22000 (
     wimlib-imagex.exe info ISOFOLDER\sources\temp.wim 1 "Windows 10 %desc%" "Windows 10 %desc%" %_Null%
+) else if %_build% geq 22000 (
+    wimlib-imagex.exe info ISOFOLDER\sources\temp.wim 1 "Windows 11 %desc%" "Windows 11 %desc%" %_Null%
+)
     )
     if %images% neq 1 (
-    wimlib-imagex.exe export ISOFOLDER\sources\%WimFile% %source% ISOFOLDER\sources\temp.wim "Windows 10 %desc%" "Windows 10 %desc%" %_Supp%
+if %_build% lss 22000 (
+    wimlib-imagex.exe info ISOFOLDER\sources\temp.wim 1 "Windows 10 %desc%" "Windows 10 %desc%" %_Null%
+) else if %_build% geq 22000 (
+    wimlib-imagex.exe info ISOFOLDER\sources\temp.wim 1 "Windows 11 %desc%" "Windows 11 %desc%" %_Null%
+)
+    )%_Supp%
     )
   )
   if %_all% neq 1 (
-  wimlib-imagex.exe export ISOFOLDER\sources\%WimFile% %source% ISOFOLDER\sources\temp.wim "Windows 10 %desc%" "Windows 10 %desc%" %_Supp%
+if %_build% lss 22000 (
+    wimlib-imagex.exe info ISOFOLDER\sources\temp.wim 1 "Windows 10 %desc%" "Windows 10 %desc%" %_Null%
+) else if %_build% geq 22000 (
+    wimlib-imagex.exe info ISOFOLDER\sources\temp.wim 1 "Windows 11 %desc%" "Windows 11 %desc%" %_Null%
+)
+    )%_Supp%
   )
 )
 if %DeleteSource% neq 1 (
+if %_build% lss 22000 (
 wimlib-imagex.exe export ISOFOLDER\sources\%WimFile% %source% ISOFOLDER\sources\temp.wim "Windows 10 %desc%" "Windows 10 %desc%" %_Supp%
+) else if %_build% geq 22000 (
+wimlib-imagex.exe export ISOFOLDER\sources\%WimFile% %source% ISOFOLDER\sources\temp.wim "Windows 11 %desc%" "Windows 11 %desc%" %_Supp%
+)
 )
 set /a index+=1
 wimlib-imagex.exe extract ISOFOLDER\sources\temp.wim %index% \Windows\System32\config\SOFTWARE \Windows\System32\config\SYSTEM \Windows\servicing\Editions\%EditionID%Edition.xml --dest-dir=.\bin\temp --no-acls --no-attributes %_Null%
@@ -518,7 +536,11 @@ type nul>bin\temp\virtual.txt
 wimlib-imagex.exe update ISOFOLDER\sources\temp.wim %index% < bin\temp\virtual.txt %_Null%
 rmdir /s /q bin\temp\
 echo.
+if %_build% lss 22000 (
 wimlib-imagex.exe info ISOFOLDER\sources\temp.wim %index% --image-property WINDOWS/EDITIONID=%EditionID% --image-property FLAGS=%EditionID% --image-property DISPLAYNAME="Windows 10 %desc%" --image-property DISPLAYDESCRIPTION="Windows 10 %desc%"
+) else if %_build% geq 22000 (
+wimlib-imagex.exe info ISOFOLDER\sources\temp.wim %index% --image-property WINDOWS/EDITIONID=%EditionID% --image-property FLAGS=%EditionID% --image-property DISPLAYNAME="Windows 11 %desc%" --image-property DISPLAYDESCRIPTION="Windows 11 %desc%"
+)
 echo.
 set modified=1
 exit /b
